@@ -142,9 +142,7 @@
     </div>
     <script src="renderer.js"></script>
     <script>
-        function back() {
-            window.chat.backFromChat();
-        }
+     
         function sendMessage() {
             var userInput = document.getElementById('user-input').value;
             if (userInput.trim() !== '') {
@@ -155,7 +153,7 @@
             }
         }
         function res(query) {
-            window.chat.sendUserChat(query);
+            window.chat.sendUserChat({isText:true,query});
             scrollToBottom();
         }
         function addMessage(sender, message) {

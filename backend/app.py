@@ -1,18 +1,17 @@
 from flask import Flask, jsonify, request
 import internal as I
 import external as E
-import keyboard
 import builtins
-import AppOpener as a
-import psutil
-import time
-import pyautogui as p
 import config as c
 
 app = Flask(__name__)
 
 
-
+@app.route('/undo',methods=["POST"])
+def undo():
+    I.undoChanges()
+    success={"success":True}
+    return jsonify(success)
 
 @app.route("/ai", methods=["POST"])
 def req():

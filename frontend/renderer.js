@@ -1,8 +1,9 @@
+
 window.chat.receivePixelResponse((e, data) => {
   var messageList = document.getElementById('message-list');
   var newMessage = document.createElement('div');
   newMessage.className = 'bot';
-  newMessage.innerHTML = '<strong>Pixel:</strong><p>' + data['pixel'] + '</p>';
+  newMessage.innerHTML = '<strong>Pixel 2.0:</strong><p>' + data['pixel'] + '</p>';
   messageList.appendChild(newMessage);
   if (data['isNews'] === 'yes') {
     newMessage = document.createElement('img');
@@ -11,4 +12,6 @@ window.chat.receivePixelResponse((e, data) => {
     messageList.appendChild(newMessage);
   }
   scrollToBottom();
+  const isAccepted = confirm("Accept Changes?")
+  window.chat.sendUserChat({ isText:false,isAccepted })
 });

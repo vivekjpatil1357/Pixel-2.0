@@ -3,11 +3,6 @@ import time
 import external as E
 import pyperclip
 
-def formatCode():
-    with p.hold("ctrl"):
-        p.keyDown("alt")
-        p.press("f")
-        p.keyUp("alt")
 
 def toFileExplorer():
     with p.hold("ctrl"):
@@ -46,7 +41,6 @@ def solveError(query):
     print(filename)
     f.write(x)
     f.close()
-    formatCode()
 
 def writeCode(query):
     toFileExplorer()
@@ -68,7 +62,6 @@ def writeCode(query):
     )
     f.write(x)
     f.close()
-    formatCode()
 
 def vscode(query):
     with p.hold("alt"):
@@ -80,6 +73,14 @@ def vscode(query):
         p.press("e")
         p.keyUp("shift")
         time.sleep(0.2)
-    formatCode()
-    
     return None
+
+def undoChanges():
+    with p.hold("alt"):
+        p.press("tab")
+    time.sleep(0.7)
+    with p.hold("ctrl"):
+        p.press("z")
+        time.sleep(0.2)
+    
+    

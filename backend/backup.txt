@@ -1,215 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
+import { useState } from 'react';
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Window</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        body {
-            background-color: #000000;
-            display: flex;
-            overflow: hidden;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-        .contain {
-            max-width: 600px;
-            background: linear-gradient(357deg, white, #baebec);
-            width: 100%;
-            /* height: 20vh; */
-            margin: 20px 0px 20px 0px;
-            padding: 24px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: -1px 0px 15px 0px rgba(0, 0, 0, 0.1);
-        }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Add your login logic here
+    console.log('Email:', email, 'Password:', password);
+  };
 
-        #message-list {
-            height: 460px;
-            scroll-behavior: smooth;
-            overflow-y: auto;
-            margin-bottom: 20px;
-            scrollbar-width: none;
+  return (
+    <form onSubmit={handleSubmit} className="w-full max-w-xs mx-auto p-6 bg-white rounded-lg shadow-md">
+      <div className="mb-4">
+        <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">Email</label>
+        <input 
+          type="email" 
+          id="email" 
+          value={email} 
+          onChange={(e) => setEmail(e.target.value)} 
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+          required 
+        />
+      </div>
+      <div className="mb-6">
+        <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">Password</label>
+        <input 
+          type="password" 
+          id="password" 
+          value={password} 
+          onChange={(e) => setPassword(e.target.value)} 
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" 
+          required 
+        />
+      </div>
+      <div className="flex items-center justify-between
+        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          Sign In
+        </button>
+      </div>
+    </form>
+  );
+};
 
-            padding: 20px 0px 19px 15px;
-            border-radius: 1px;
-            background: linear-gradient(357deg, white, #baebec);
-        }
-
-        #message-list::-webkit-scrollbar {
-            width: 0px;
-            /* Adjust the width as needed */
-        }
-
-        #message-list::-webkit-scrollbar-thumb {
-            background-color: #6a8886;
-            /* Cuscotomize the color of the scrollbar thumb */
-        }
-/* 
-        #send-button {
-            padding: 10px;
-            background-color: #3498db;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            outline: none;
-        } */
-
-        #send-button:hover {
-         cursor: pointer;
-        }
-
-        .bot strong,
-        .user strong {
-            align-self: flex-start;
-            color: #ffffffc4;
-        }
-
-        .bot p,
-        .user p {
-            text-align: start;
-            margin: 0px;
-
-        }
-
-        .bot {
-            display: flex;
-            flex-direction: column;
-            background: rgb(4 4 4);
-            max-width: 280px;
-            color: white;
-            border-radius: 0px 12px 12px 12px;
-            /* max-height: 100px; */
-            align-self: flex-start;
-            font-size: 16px;
-            font-weight: 400;
-            margin-top: 8px;
-            margin: 0px 5px 4px 1px;
-            padding: 8px 8px 8px 8px;
-        }
-
-        .user {
-            background: rgb(4 4 4);
-            max-width: 280px;
-            color: white;
-            border-radius: 12px 0px 12px 12px;
-            /* max-height: 100px; */
-            align-self: end;
-            margin-top: 8px;
-            margin: 0px 7px 4px 0px;
-            padding: 8px 8px 8px 8px;
-
-        }
-
-        input,
-        button {
-            transition: all 0.3s ease;
-        }
-
-        .head {
-            margin: 0px 0px 0px 15px;
-            padding: 0px;
-        }
-
-        hr {
-            border-color: black;
-        }
-
-        .arrow {
-            background: rgba(255, 255, 255, 0.635);
-            border: white;
-            border-radius: 30px 0px 0px 30px;
-            width: 45px;
-            height: 26px;
-        }
-
-        .arrow:hover {
-            cursor: pointer;
-        }
-        .header{
-            display: flex;
-            justify-content: center;
-        }
-
-        .arrow:active {
-            background-color: rgb(158, 234, 255);
-            transform: scale(0.8);
-        }
-    </style>
-
-</head>
-
-<body>
-    <div class="contain">
-        <input type="button" value="Back" class="arrow" id="back" onclick="back()">
-        <div class="header">
-            <h1 class="head">Chat</h1>
-        </div>
-
-        <hr>
-        <div id="message-list" style="display: flex;flex-direction: column"></div>
-
-        <div style="display: flex; ">
-            <div class="form__group field">
-                <input type="input" class="form__field" placeholder="Type here..." name="name"  onkeyup="handleKeyPress(event)" id='user-input'
-                    required />
-                <label for="name" class="form__label">Chat</label>
-            </div>
-            <!-- <input type="textarea" id="user-input" placeholder="Type here..." onkeyup="handleKeyPress(event)"> -->
-            <img src="icons8-send-button-60.png" id="send-button" onclick="sendMessage()" width="45px" height="45px" >
-            <!-- <button id="send-button" onclick="sendMessage()">Send</button> -->
-        </div>
-    </div>
-
-    <script src="renderer.js"></script>
-    <script>
-        function back() {
-            window.chat.backFromChat();
-        }
-        
-        function sendMessage() {
-            
-            var userInput = document.getElementById('user-input').value;
-            if (userInput.trim() !== '') {
-                addMessage('Vivek', userInput);
-                document.getElementById('user-input').value = '';
-                scrollToBottom();
-                res(userInput)
-            }
-        }
-        function res(query) {
-            window.chat.sendUserChat(query);
-            scrollToBottom();
-        }
-
-        function addMessage(sender, message) {
-            var messageList = document.getElementById('message-list');
-            var newMessage = document.createElement('div');
-            newMessage.className = "user"
-            // newMessage.style = "align-self:start;"
-            newMessage.align = 'left'
-            newMessage.innerHTML = '<strong>' + sender + ':</strong><p> ' + message + '</p>';
-            if (message.trim() != '')
-                messageList.appendChild(newMessage);
-            scrollToBottom()
-        }
-
-        function scrollToBottom() {
-            var messageList = document.getElementById('message-list');
-            messageList.scrollTop = messageList.scrollHeight;
-        }
-        function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                sendMessage();
-            }
-        }
-    </script>
-</body>
-</html>
+export default Login;
